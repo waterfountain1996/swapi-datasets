@@ -15,7 +15,7 @@ def process_people(
     cache: dict[str, str],
     append: bool = False,
 ):
-    """Process a list of person dictionaries.
+    """Process a list of person dictionaries and write them to csv file.
 
     Args:
         people: List of people dictionaries.
@@ -36,7 +36,7 @@ def process_people(
             ),
         )
         .cutout(
-            [
+            *[
                 "url",
                 "created",
                 "edited",

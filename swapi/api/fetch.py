@@ -73,6 +73,6 @@ def read_and_aggregate_columns(
         list of dictionaries
     """
     table = (
-        etl.fromcsv(filename).cut(*columns).distinct(key=columns, count=True)
+        etl.fromcsv(filename).cut(*columns).distinct(key=columns, count="count")
     )
     return list(table.dicts())

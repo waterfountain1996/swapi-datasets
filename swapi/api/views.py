@@ -11,7 +11,7 @@ from .serializers import DatasetSerializer
 class FetchSWApiView(APIView):
     def get(self, _):
         fetch_dataset.delay()
-        return Response({"ok": True, "message": "Fetching dataset"})
+        return Response({"message": "Fetching dataset"})
 
 
 class DatasetView(ReadOnlyModelViewSet):
@@ -25,12 +25,12 @@ class DatasetView(ReadOnlyModelViewSet):
         """
         try:
             dataset = Dataset.objects.get(pk=pk)
-        except:
+        except Dataset.DoesNotExist:
             return Response({"error": "Dataset not found"}, 404)
 
         try:
             offset = int(request.GET["offset"])
-        except:
+        except (KeyError, ValueError):
             offset = 0
 
         return Response(read_dataset(filename=dataset.filename, skip=offset))
