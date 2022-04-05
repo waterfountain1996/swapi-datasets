@@ -15,7 +15,7 @@ class FetchSWApiView(APIView):
 
 
 class DatasetView(ReadOnlyModelViewSet):
-    queryset = Dataset.objects.all().order_by('-timestamp')
+    queryset = Dataset.objects.all().order_by("-timestamp")
     serializer_class = DatasetSerializer
 
     def retrieve(self, request, pk):
@@ -33,9 +33,7 @@ class DatasetView(ReadOnlyModelViewSet):
         except:
             offset = 0
 
-        return Response(read_dataset(
-            filename=dataset.filename,
-            skip=offset))
+        return Response(read_dataset(filename=dataset.filename, skip=offset))
 
 
 class ColumnsView(APIView):
@@ -55,6 +53,8 @@ class ColumnsView(APIView):
         except:
             return Response({"error": "No columns specified"}, 400)
 
-        return Response(read_and_aggregate_columns(
-            filename=dataset.filename,
-            columns=columns))
+        return Response(
+            read_and_aggregate_columns(
+                filename=dataset.filename, columns=columns
+            )
+        )

@@ -59,11 +59,13 @@ def read_dataset(filename: str, nrows: int = 10, skip: int = 0) -> list[dict]:
     Returns:
         list of dictionaries.
     """
-    table = etl.fromcsv(filename).rowslice(skip, skip+nrows)
+    table = etl.fromcsv(filename).rowslice(skip, skip + nrows)
     return list(table.dicts())
 
 
-def read_and_aggregate_columns(filename: str, columns: list[str]) -> list[dict]:
+def read_and_aggregate_columns(
+    filename: str, columns: list[str]
+) -> list[dict]:
     """Read specified `columns` from dataset and include column displaying
     duplicate row count.
 
@@ -71,9 +73,6 @@ def read_and_aggregate_columns(filename: str, columns: list[str]) -> list[dict]:
         list of dictionaries
     """
     table = (
-        etl
-        .fromcsv(filename)
-        .cut(*columns)
-        .distinct(key=columns, count=True)
+        etl.fromcsv(filename).cut(*columns).distinct(key=columns, count=True)
     )
     return list(table.dicts())
